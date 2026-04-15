@@ -7,7 +7,7 @@
 #include <orbis/SystemService.h>
 #include <orbis/UserService.h>
 #include <orbis/SystemService.h>
-#include <polarssl/md5.h>
+#include <mbedtls/md5.h>
 #include <mini18n.h>
 
 #include "saves.h"
@@ -291,6 +291,7 @@ static int _copy_save_hdd(const save_entry_t* save)
 	sfo_patch_t patch = {
 		.user_id = apollo_config.user_id,
 		.account_id = apollo_config.account_id,
+		.psid = (uint8_t*) apollo_config.psid,
 	};
 
 	if (!orbis_SaveMount(save, ORBIS_SAVE_DATA_MOUNT_MODE_RDWR | ORBIS_SAVE_DATA_MOUNT_MODE_CREATE2 | ORBIS_SAVE_DATA_MOUNT_MODE_COPY_ICON, mount))
@@ -319,6 +320,7 @@ static int _copy_save_pfs(const save_entry_t* save)
 	sfo_patch_t patch = {
 		.user_id = apollo_config.user_id,
 		.account_id = apollo_config.account_id,
+		.psid = (uint8_t*) apollo_config.psid,
 	};
 
 	snprintf(src_path, sizeof(src_path), "%s%s.bin", save->path, save->dir_name);
@@ -695,13 +697,14 @@ static int webReqHandler(dWebRequest_t* req, dWebResponse_t* res, void* list)
 	if (strcmp(req->resource, "/") == 0)
 	{
 		uint64_t hash[2];
-		md5_context ctx;
+		mbedtls_md5_context ctx;
 
-		md5_starts(&ctx);
+		mbedtls_md5_init(&ctx);
+		mbedtls_md5_starts(&ctx);
 		for (node = list_head(list); (item = list_get(node)); node = list_next(node))
-			md5_update(&ctx, (uint8_t*) item->name, strlen(item->name));
+			mbedtls_md5_update(&ctx, (uint8_t*) item->name, strlen(item->name));
 
-		md5_finish(&ctx, (uint8_t*) hash);
+		mbedtls_md5_finish(&ctx, (uint8_t*) hash);
 		asprintf(&res->data, APOLLO_LOCAL_CACHE "web%016lx%016lx.html", hash[0], hash[1]);
 
 		if (file_exists(res->data) == SUCCESS)
@@ -1344,7 +1347,6 @@ static void uploadAllSavesFTP(const save_entry_t* save, int all)
 	char *tmp = NULL;
 	char mount[ORBIS_SAVE_DATA_DIRNAME_DATA_MAXSIZE];
 	int done = 0, err_count = 0;
-	uint64_t progress = 0;
 	list_node_t *node;
 	save_entry_t *item;
 	list_t *list = ((void**)save->dir_name)[0];
