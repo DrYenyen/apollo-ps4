@@ -478,9 +478,8 @@ This is a fix if you want to make use of files that are for the same game but di
 1. Download and install [Xlight FTP Server](https://www.xlightftpd.com/download.htm):
 2. Add a new virtual server and set the IP of your current PC from the dropdown. 	
 3. From "User list" add a new user and set a password. Then add the home directory set it where you want your saves to be stored.
-4. From "Modify Virtual Server Configuration" under "Virtual Server - FTP" tick "Enable SSL for virtual server" and set it to "Explicit SSL mode" 
-5. From "User list" select the user you made and in "User Path" select the path and edit the permissions by ticking all options to enable them" 
-6. Turn on the server or restart it. Then you can follow the instructions below on how to connect to the server from your console.
+4. From "User list" select the user you made and in "User Path" select the path and edit the permissions by ticking all options to enable them" 
+5. Turn on the server or restart it. Then you can follow the instructions below on how to connect to the server from your console.
 * For a partial visual guide see https://www.xlightftpd.com/tutorial/get_started.html alongside the above. 
 
 #### Wing FTP 
