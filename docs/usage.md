@@ -450,12 +450,23 @@ This is a fix if you want to make use of files that are for the same game but di
 ## Using FTP to Backup Saves
 
 * The Apollo Save Tool FTP Server feature allows you to download and upload saves from an FTP server. 
-* IF you have issues connecting to the server from your console you may need to disable your firewall or add a rule for the specific app you are using.
+* If you have issues connecting to the server from your console you may need to disable your firewall or add a rule for the specific app you are using.
 
 > [!TIP]
 > For local LAN servers you must be connected to the same network on both devices and a set up the necessary permissions.
 > - Optionally if you have an FTP server from a webhost provider `ftp://mywebhost.com` you can connect to the external server. 
 > - Local LAN is faster.
+
+### FTP Servers
+
+There are many third-party FTP servers, for example:
+
+- [Xlight FTP Server](https://www.xlightftpd.com/download.htm): Windows 32-bit and 64-bit, tested and works ok.
+- [Serv-U FTP Server](https://web.archive.org/web/20070129085010/http://files1.rhinosoft.com/files/susetup.exe): Windows 32-bit server, tested and works ok.
+- [Wing FTP Server](https://www.wftpserver.com/download.htm): Windows, Linux, and macOS server, tested on Windows, works ok.
+- [ProFTPD](http://www.proftpd.org/): Linux and macOS server, untested.
+- [Pure-FTPd](https://www.pureftpd.org/): Linux and macOS server, untested.
+- [FileZilla Server](https://filezilla-project.org/): this server has compatibility issues with TLS settings. You can find a workaround [in this section](#filezilla). Use and set up at your own risk.
 
 ### On Windows
 
@@ -465,22 +476,22 @@ This is a fix if you want to make use of files that are for the same game but di
 2. Set the admin password and save it for later.
 3. Use the default settings in the installer. 
 4. After installing log in with the admin password you set and trust the server fingerprint. 
-5. Got to Server>Configure. 
-6. In "Server listeners" set the IP of your current PC, and set "Protocol" to "Explicit FTP over TLS and insecure plain FTP". 
-7. Under "Protocols settings" open the dropdown and choose "FTP and FTP over TLS(FTPS)". In "Connection Security" change the "Minimum allowed TLS version" to 1.3.
-8. Under "Rights management" open the dropdown and choose "Users".
-9. Under "Available users" click "Add" give the user a name and password and save them for later. 
-10. At the new user in "Mount points" for "Virtual path" set it to "/" and for native path add set it where you want your saves to be stored. You will have to copy it with file explorer or while holding shift and clicking on a folder to copy it as path. 
-11. Make sure all the "Mount options" settings are enabled/ticked. Then you can follow the instructions below on how to connect to the server from your console.
+5. Got to `Server` > `Configure`.
+6. In `Server listeners` set the IP of your current PC, and set `Protocol` to `Explicit FTP over TLS and insecure plain FTP`. 
+7. Under `Protocols settings` open the dropdown and choose `FTP and FTP over TLS(FTPS)`. In `Connection Security` change the `Minimum allowed TLS version` to 1.3.
+8. Under "Rights management" open the dropdown and choose `Users`.
+9. Under "Available users" click `Add` give the user a name and password and save them for later. 
+10. At the new user in `Mount points` for `Virtual path` set it to `/` and for native path add set it where you want your saves to be stored. You will have to copy it with file explorer or while holding shift and clicking on a folder to copy it as path. 
+11. Make sure all the `Mount options` settings are enabled/ticked. Then you can follow the instructions below on how to connect to the server from your console.
 
 #### Xlight 
 
 1. Download and install [Xlight FTP Server](https://www.xlightftpd.com/download.htm):
 2. Add a new virtual server and set the IP of your current PC from the dropdown. 	
-3. From "User list" add a new user and set a password. Then add the home directory set it where you want your saves to be stored.
-4. From "User list" select the user you made and in "User Path" select the path and edit the permissions by ticking all options to enable them" 
+3. From `User list` add a new user and set a password. Then add the home directory set it where you want your saves to be stored.
+4. From `User list` select the user you made and in `User Path` select the path and edit the permissions by ticking all options to enable them.
 5. Turn on the server or restart it. Then you can follow the instructions below on how to connect to the server from your console.
-* For a partial visual guide see https://www.xlightftpd.com/tutorial/get_started.html alongside the above. 
+* Check [this link](https://www.xlightftpd.com/tutorial/get_started.html) for a quick-start visual guide.
 
 #### Wing FTP 
 
@@ -488,7 +499,7 @@ This is a fix if you want to make use of files that are for the same game but di
 2. Set an admin username and password and save them for later. 
 3. Create a domain and name it anything you want. 
 4. Create a user account and set the password and save them for later. 
-5. Set the "Home Directory" set it where you want your saves to be stored. And enable all the file access and directory access options including the zip ones. Then you can follow the instructions below on how to connect to the server from your console.
+5. Set the `Home Directory` set it where you want your saves to be stored. And enable all the file access and directory access options including the zip ones. Then you can follow the instructions below on how to connect to the server from your console.
 
 ### On Android
 
@@ -499,29 +510,18 @@ This is a fix if you want to make use of files that are for the same game but di
 ### On a NAS
 
 * TrueNAS Scale will be used as an example. 
-1. Add a new Dataset and name it whatever you want. For example: PS3saves
-2. Go to "Credentials and make a new User and set a password and set the user directory as the Dataset you just created. 
-3. Go to "System Settings" then "Services" and enable the FTP service, setting its path to the Dataset. 
-
-### FTP Servers
-
-There are many third-party FTP servers, for example:
-
-- [Xlight FTP Server](https://www.xlightftpd.com/download.htm): Windows 32-bit and 64-bit, tested and works ok.
-- [Serv-U FTP Server](https://web.archive.org/web/20070129085010/http://files1.rhinosoft.com/files/susetup.exe): Windows 32-bit server, tested and works ok.
-- [Wing FTP Server](https://www.wftpserver.com/download.htm): Windows, Linux, and macOS server, untested.
-- [ProFTPD](http://www.proftpd.org/): Linux and macOS server, untested.
-- [Pure-FTPd](https://www.pureftpd.org/): Linux and macOS server, untested.
-- [FileZilla Server](https://filezilla-project.org/): this server is **not recommended**, you'll find compatibility issues with TLS settings. Use and set up at your own risk.
+1. Add a new Dataset and name it whatever you want. For example: `PS3saves`
+2. Go to `Credentials` and make a new User and set a password and set the user directory as the Dataset you just created. 
+3. Go to `System Settings` then `Services` and enable the FTP service, setting its path to the Dataset. 
 
 ### Connecting to the Server from Apollo
 
 * The previously created FTP server credentials and IP are required. 
 1. Download and install the latest version of [Apollo Save Tool](https://github.com/bucanero/apollo-ps4/releases/latest).
 2. Open Apollo and go to Settings.
-3. Select "Set User FTP Server URL" and enter in your FTP server IP along with the username and password then press the start button.
-4. The following structure is a template: `ftp://username:password@192.168.0.1/path/`
-5. An example: `ftp://peaches:mono58672@192.168.1.9`
-6. You can now upload saves to your FTP server by going into the save and choosing "Upload save backup to FTP". 
-7. To download saves you have uploaded go to Settings and set the "Online Saves Server" to "FTP Server" as the source.
+3. Select `Set User FTP Server URL` and enter in your FTP server IP along with the username and password then press the start button.
+   - The following structure is a template: `ftp://username:password@192.168.0.1/path/`
+   - An example: `ftp://peaches:mono58672@192.168.1.9`
+6. You can now upload saves to your FTP server by going into the save and choosing `Upload save backup to FTP`. 
+7. To download saves you have uploaded go to Settings and set the `Online Saves Server` to `FTP Server` as the source.
 8. Return to the Apollo home screen , navigate to FTP Server, and download the desired saves.
